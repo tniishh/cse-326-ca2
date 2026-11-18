@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<!-- Declares this as an HTML5 document -->
+<html lang="en">
+<head>
+  <!-- Lets the browser show characters like é or £ correctly -->
+  <meta charset="UTF-8">
+  <!-- Makes the page fit phone screens instead of shrinking a desktop layout -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NeighbourShare | Neighbourhood Resource Sharing</title>
+  <!-- Connects our styling file -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ===== STICKY NAVIGATION BAR ===== -->
+  <!-- <header> is the semantic tag for the top of the page -->
+  <header class="navbar">
+    <a href="#home" class="logo"> Neighbour <span>Share</span></a>
+
+    <!-- Hamburger button: only shows on small screens (see style.css) -->
+    <button class="menu-toggle" id="menuToggle" aria-label="Open menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <nav>
+      <!-- Each href points to an id further down the page, e.g. #browse -->
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#browse">Browse Resources</a></li>
+        <li><a href="#share">Share an Item</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <!-- ===== HERO SECTION: mission and call to action ===== -->
+    <section id="home" class="hero">
+      <h1>Borrow what you need. Lend what you don't.</h1>
+      <p class="hero-text">NeighbourShare is a shared shelf for your street. Lend a drill, borrow a tent, or offer a skill you already have, so fewer things get bought and used once.</p>
+      <!-- A link styled as a button; it jumps down to the catalog -->
+      <a href="#browse" class="btn btn-primary">Browse Items</a>
+    </section>
+
+    <!-- ===== RESOURCE CATALOG ===== -->
+    <section id="browse" class="section">
+      <h2 class="section-title">Browse Resources</h2>
+
+      <div class="controls">
+        <!-- Each button stores its category in data-category; JavaScript reads it -->
+        <div class="filter-buttons" id="filterButtons">
+          <button class="filter-btn active" data-category="All">All</button>
+          <button class="filter-btn" data-category="Tools">Tools</button>
+          <button class="filter-btn" data-category="Electronics">Electronics</button>
+          <button class="filter-btn" data-category="Outdoors">Outdoors</button>
+          <button class="filter-btn" data-category="Books/Hobbies">Books/Hobbies</button>
+        </div>
+        <!-- type="search" gives a clear button in most browsers -->
+        <input type="search" id="searchInput" placeholder="Search items or owners">
+      </div>
+
+      <!-- JavaScript fills this grid with cards -->
+      <div class="grid" id="catalogGrid"></div>
+      <!-- Hidden until a search finds nothing -->
+      <p class="empty-msg" id="emptyMsg" hidden>No items match. Try another word or choose All.</p>
+    </section>
+
+    <!-- ===== SHARE A RESOURCE FORM ===== -->
+    <section id="share" class="section">
+      <h2 class="section-title">Share a Resource</h2>
+      <!-- novalidate turns off the browser's own pop-ups; our JavaScript checks the inputs -->
+      <form id="shareForm" class="share-form" novalidate>
+        <div class="form-row">
+          <label>Item name
+            <input type="text" id="itemName" placeholder="e.g. pool">
+          </label>
+          <label>Category
+            <select id="itemCategory">
+              <option>Tools</option>
+              <option>Electronics</option>
+              <option>Outdoors</option>
+              <option>Books/Hobbies</option>
+            </select>
+          </label>
+        </div>
+        <div class="form-row">
+          <label>Owner name
+            <input type="text" id="ownerName" placeholder="Your name">
+          </label>
+          <label>Contact or block info
+            <input type="text" id="contactInfo" placeholder="e.g. Block C, Flat 204">
+          </label>
+        </div>
+        <!-- JavaScript writes any error message here -->
+        <p class="form-error" id="formError"></p>
+        <button type="submit" class="btn btn-primary">List my item</button>
+      </form>
+
+  </main>
+
+  <!-- ===== BORROW / REQUEST MODAL (popup) ===== -->
+  <!-- "hidden" keeps it off screen until JavaScript opens it -->
+  <div class="modal" id="requestModal" hidden>
+    <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <button class="modal-close" id="closeModal" aria-label="Close">&times;</button>
+      <h3 id="modalTitle">Request to borrow</h3>
+      <!-- JavaScript fills in the item details here -->
+      <p class="modal-item" id="modalItemInfo"></p>
+      <form id="requestForm" novalidate>
+        <label>Your name
+          <input type="text" id="requesterName">
+        </label>
+        <label>Flat number
+          <input type="text" id="requesterFlat" placeholder="e.g. 204">
+        </label>
+        <p class="form-error" id="requestError"></p>
+        <button type="submit" class="btn btn-primary">Send request</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Loaded last, so every element above exists before the script runs -->
+  <script src="script.js"></script>
+</body>
+</html>
